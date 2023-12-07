@@ -1,16 +1,10 @@
 import { useState } from 'react';
-import { ActionIcon, Button, Tabs } from '@mantine/core';
-import * as Tone from 'tone';
+import { ActionIcon, Tabs } from '@mantine/core';
 import { GoPlus } from 'react-icons/go';
 import Emitter from '../Emitter/Emitter';
 import styles from './Container.module.css';
 
 const indexColor = index => `hsl(${index * (360 / 12) + 200}, 100%, 50%)`;
-
-const startAudio = async () => {
-  await Tone.start();
-  console.log('audio is ready');
-};
 
 export default function Container() {
   const [instances, setInstances] = useState(1);
@@ -36,7 +30,6 @@ export default function Container() {
           )}
         </Tabs>
       </div>
-      {/* <Button style={{ width: '100px' }} onClick={startAudio}>Play</Button> */}
     </div>
   );
 }

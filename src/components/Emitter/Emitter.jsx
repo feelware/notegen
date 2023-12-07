@@ -1,21 +1,20 @@
 import { Select, Slider, Text } from '@mantine/core';
 import { useState } from 'react';
-import * as Tone from 'tone';
 import keys from '../../utils/scales';
 import styles from './Emitter.module.css';
 import normalDist from '../../utils/normalDist';
 
-const chooseWithProb = (arr) => {
-  const rand = Math.random();
-  let sum = 0;
-  for (const item of arr) {
-    sum += item.prob;
-    if (rand < sum) {
-      return item;
-    }
-  }
-  return arr[arr.length - 1];
-};
+// const chooseWithProb = (arr) => {
+//   const rand = Math.random();
+//   let sum = 0;
+//   for (const item of arr) {
+//     sum += item.prob;
+//     if (rand < sum) {
+//       return item;
+//     }
+//   }
+//   return arr[arr.length - 1];
+// };
 
 export default function Emitter({ color }) {
   const [pitchSD, setPitchSD] = useState(10);
