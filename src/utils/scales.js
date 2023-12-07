@@ -111,12 +111,20 @@ const EQUALTEMP = [
 
 const keys = [
   {
-    name: "Major",
+    name: "C Major",
     notes: EQUALTEMP.filter((note) => !note[0].includes("#")).map((note) => ({
       name: note[0],
       frequency: note[1]
     }))
   },
+  {
+    name: "C Minor",
+    notes: EQUALTEMP.filter((note) => 
+    ["C", "D", "D#", "F", "G", "G#", "A#"].includes(note[0].replace(/[0-9]/g, ""))).map((note) => ({
+      name: note[0],
+      frequency: note[1]
+    }))
+  }
 ]
 
 export default keys

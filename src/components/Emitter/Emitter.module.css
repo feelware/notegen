@@ -1,21 +1,7 @@
 .main {
-  border: 1px solid var(--mantine-color-gray-3);
-  padding: 20px 25px;
-  border-radius: 4px;
-  width: 60vw
-}
-
-.select {
-}
-
-.panel {
   display: flex;
   flex-direction: column;
   gap: 10px;
-}
-
-.dist {
-
 }
 
 .options {
