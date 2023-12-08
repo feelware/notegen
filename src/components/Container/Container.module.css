@@ -1,12 +1,19 @@
-.main {
+.global {
   display: flex;
   flex-direction: column;
-  gap: 20px
+  width: 70vw;
+  gap: 10px;
 }
 
-.tabs {
+.bar {
+  display: flex;
+  gap: 10px;
+  align-items: flex-end;
+}
+
+.container {
   border: 1px solid var(--mantine-color-gray-3);
   padding: 20px;
   border-radius: 4px;
-  width: 70vw
+  width: 100%
 }
