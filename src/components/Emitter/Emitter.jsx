@@ -11,6 +11,7 @@ import normalDist from '../../utils/normalDist';
 const startAudio = async () => {
   await Tone.start();
   Tone.Transport.start();
+  console.log('audio is ready');
 };
 
 export default function Emitter({ color }) {
@@ -49,12 +50,12 @@ export default function Emitter({ color }) {
   };
 
   useEffect(() => {
-    Tone.context.state === 'suspended' && startAudio();
     const loop = new Tone.Loop((time) => {
       const note = chooseProb(scaleRef.current);
       synth.triggerAttackRelease(note, '8n', time);
     }, '8n');
     if (playing) {
+      startAudio();
       loop.start(0);
     }
     return () => {
