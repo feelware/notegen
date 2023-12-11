@@ -28,36 +28,34 @@ export default function Emitter({ color }) {
     .keys.find((k) => k.name === key)
     .notes, octaves));
 
-  const pitchScaler = 0.09 / Math.max(...scale.map((note) => note.prob));
-
   const scaleRef = useRef(scale);
   scaleRef.current = scale;
+
+  const pitchScaler = 0.09 / Math.max(...scale.map((note) => note.prob));
 
   const chooseProb = (arr) => {
     const rand = Math.random();
     let sum = 0;
-    for (let i = 0; i < arr.length; i++) {
-      sum += arr[i].prob;
-      if (rand <= sum) {
-        return arr[i].value;
-      }
-    }
+    const chosen = arr.find(item => {
+      sum += item.prob;
+      return rand <= sum;
+    });
+    return chosen ? chosen.value : arr[arr.length - 1].value;
   };
 
   const handlePlayback = () => {
-    Tone.context.state === 'suspended' && startAudio();
-    setPlaying(!playing);
+    scaleRef.current = scale;
+    setPlaying((currentPlaying) => !currentPlaying);
   };
 
   useEffect(() => {
+    Tone.context.state === 'suspended' && startAudio();
     const loop = new Tone.Loop((time) => {
       const note = chooseProb(scaleRef.current);
-      synth.triggerAttackRelease(note, '4n', time);
-    }, '4n');
+      synth.triggerAttackRelease(note, '8n', time);
+    }, '8n');
     if (playing) {
       loop.start(0);
-    } else {
-      loop.dispose();
     }
     return () => {
       loop.dispose();

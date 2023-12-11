@@ -11,11 +11,6 @@ import styles from './Container.module.css';
 
 const indexColor = index => `hsl(${index * (360 / 12) + 200}, 100%, 50%)`;
 
-// const handlePlayback = () => {
-//   Tone.context.state === 'suspended' && startAudio();
-//   Tone.Transport.state === 'started' ? Tone.Transport.pause() : Tone.Transport.start();
-// };
-
 export default function Container() {
   const [instances, setInstances] = useState(1);
   const root = useScale(state => state.root);
@@ -65,7 +60,14 @@ export default function Container() {
           <Tabs.List>
             {Array.from({ length: instances }, (_, i) =>
               <Tabs.Tab key={i} color={indexColor(i)} value={i.toString()}>{i + 1}</Tabs.Tab>)}
-            <ActionIcon variant="transparent" color="gray" styles={{ root: { top: '2.5px', width: '35px' } }} onClick={addInstance}><GoPlus /></ActionIcon>
+            <ActionIcon
+              variant="transparent"
+              color="gray"
+              styles={{ root: { top: '2.5px', width: '35px' } }}
+              onClick={addInstance}
+            >
+              <GoPlus />
+            </ActionIcon>
           </Tabs.List>
           {
             Array.from({ length: instances }, (_, i) =>

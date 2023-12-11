@@ -1,8 +1,8 @@
 import { create } from 'zustand';
 
 const useScale = create((set) => ({
-  root: 'C',
-  key: 'Minor Pentatonic',
+  root: 'D',
+  key: 'Major Pentatonic',
   setRoot: (root) => set({ root }),
   setKey: (key) => set({ key }),
 }));
