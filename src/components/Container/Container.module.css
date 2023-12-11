@@ -17,3 +17,12 @@
   border-radius: 4px;
   width: 100%
 }
+
+.settings {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  overflow: auto;
+  padding: 15px 10px;
+  overflow: visible;
+}

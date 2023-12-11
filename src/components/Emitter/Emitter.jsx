@@ -3,6 +3,7 @@ import { useRef, useEffect, useState } from 'react';
 import * as Tone from 'tone';
 import scales from '../../data/scales';
 import useScale from '../../stores/useScale';
+import useVolume from '../../stores/useVolume';
 import useAutoScale from '../../stores/useAutoScale';
 import extendScale from '../../utils/extendScale';
 import styles from './Emitter.module.css';
@@ -11,7 +12,6 @@ import normalDist from '../../utils/normalDist';
 const startAudio = async () => {
   await Tone.start();
   Tone.Transport.start();
-  console.log('audio is ready');
 };
 
 export default function Emitter({ color }) {
@@ -19,10 +19,18 @@ export default function Emitter({ color }) {
   const [pitchMean, setPitchMean] = useState(5);
   const [pitchSD, setPitchSD] = useState(3);
   const [playing, setPlaying] = useState(false);
-  const synth = new Tone.Synth().toDestination();
+  const volume = useVolume(state => state.volume);
+  const synthRef = useRef(null);
+  if (!synthRef.current) {
+    synthRef.current = new Tone.Synth().toDestination();
+  }
   const root = useScale(state => state.root);
   const key = useScale(state => state.key);
   const autoScale = useAutoScale(state => state.autoScale);
+
+  useEffect(() => {
+    synthRef.current.volume.value = volume;
+  }, [volume]);
 
   const scale = normalDist(pitchMean, pitchSD, extendScale(
     scales.find((s) => s.root === root)
@@ -52,7 +60,7 @@ export default function Emitter({ color }) {
   useEffect(() => {
     const loop = new Tone.Loop((time) => {
       const note = chooseProb(scaleRef.current);
-      synth.triggerAttackRelease(note, '8n', time);
+      synthRef.current.triggerAttackRelease(note, '8n', time);
     }, '8n');
     if (playing) {
       startAudio();

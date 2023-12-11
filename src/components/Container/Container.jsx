@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import { ActionIcon, Tabs, Checkbox, Modal, Button, Select } from '@mantine/core';
+import { ActionIcon, Tabs, Checkbox, Modal, Button, Select, Slider, Text } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { GoPlus } from 'react-icons/go';
 import { CiSettings } from 'react-icons/ci';
 import scales from '../../data/scales';
 import Emitter from '../Emitter/Emitter';
 import useScale from '../../stores/useScale';
+import useVolume from '../../stores/useVolume';
 import useAutoScale from '../../stores/useAutoScale';
 import styles from './Container.module.css';
 
@@ -18,6 +19,8 @@ export default function Container() {
   const setRoot = useScale(state => state.setRoot);
   const setKey = useScale(state => state.setKey);
   const [opened, { open, close }] = useDisclosure();
+  const volume = useVolume(state => state.volume);
+  const setVolume = useVolume(state => state.setVolume);
   const autoScale = useAutoScale(state => state.autoScale);
   const toggleAutoScale = useAutoScale(state => state.toggleAutoScale);
 
@@ -49,8 +52,19 @@ export default function Container() {
         <Button color="gray.4" variant="outline" size="sm" onClick={open}>
           <CiSettings size={25} color="gray" />
         </Button>
-        <Modal opened={opened} onClose={close} title="Settings">
+        <Modal opened={opened} onClose={close} title="Settings" styles={{ root: { overflow: 'visible' } }}>
           <div className={styles.settings}>
+            <div className={styles.slider}>
+              <Text size="sm">Volume</Text>
+              <Slider
+                min={-60}
+                max={0}
+                step={3}
+                label={`${volume} dB`}
+                value={volume}
+                onChange={setVolume}
+              />
+            </div>
             <Checkbox label="Auto-scale graph" checked={autoScale} onChange={toggleAutoScale} />
           </div>
         </Modal>
